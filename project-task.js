@@ -78,7 +78,7 @@ while (true) {
             console.log(`${animal}'s adoption fee is $${getAdoptionFee(animal)}.`);    
 
         } catch(err) {
-          console.error(err);
+            console.error(err);
         }
     } else {
         console.log("Invalid action. Please choose 'add', 'fee', or 'exit'.");
