@@ -33,33 +33,23 @@ const readlineSync = require('readline-sync');
 let animals = [];
 let fees = [];
 function addAnimal(name, fee) {
-    try {
-        if (!name || fee < 0) {
-            throw new Error("Invalid animal name or adoption fee!");
-        }
-        
-        animals.push(name);
-        fees.push(fee);
-    } catch(err) {
-        console.error(err);
-        return;
+    if (!name || fee < 0) {
+        throw new Error("Invalid animal name or adoption fee!");
     }
+    
+    animals.push(name);
+    fees.push(fee);
 
+    return;
 }
 function getAdoptionFee(animalName) {
     let index = animals.indexOf(animalName);
 
-    try {
-        if (index === -1) {
-            throw new Error("Animal not found in records!");
-        }
-        
-        return fees[index];
-    } catch (error) {
-        console.error(error);
-        return;
+    if (index === -1) {
+        throw new Error("Animal not found in records!");
     }
-
+    
+    return fees[index];
 }
 // Main program
 console.log("Welcome to the Pet Shelter System");
@@ -73,13 +63,23 @@ while (true) {
         let animal = readlineSync.question("Enter the animal's name: ");
         let fee = Number(readlineSync.question("Enter the adoption fee: "));
 
-        addAnimal(animal, fee);
-        console.log(`${animal} has been added, their fee is ${fee}.`);
+        try {
+            addAnimal(animal, fee);
+            console.log(`${animal} has been added, their fee is ${fee}.`);
+        } catch (err) {
+            console.error(err);
+        }
 
     } else if (action === "fee") {
         let animal = readlineSync.question("Enter the animal's name to find its adoption fee: ");
-        getAdoptionFee(animal);
-        console.log(`${animal}'s adoption fee is $${getAdoptionFee(animal)}.`);    
+
+        try {
+            getAdoptionFee(animal);
+            console.log(`${animal}'s adoption fee is $${getAdoptionFee(animal)}.`);    
+
+        } catch(err) {
+          console.error(err);
+        }
     } else {
         console.log("Invalid action. Please choose 'add', 'fee', or 'exit'.");
     }
